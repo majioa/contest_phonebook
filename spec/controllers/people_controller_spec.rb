@@ -24,11 +24,12 @@ RSpec.describe PeopleController, type: :controller do
   # Person. As you add validations to Person, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { fullname: 'Name', email: 'q@q.e', phone: '+7-111-1111111',
+      description: 'desc'}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { fullname: nil }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +104,15 @@ RSpec.describe PeopleController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { fullname: 'Name1', email: 'q@q1.e', phone: '+7-222-1111111',
+            description: 'new desc'}
       }
 
       it "updates the requested person" do
         person = Person.create! valid_attributes
         put :update, {:id => person.to_param, :person => new_attributes}, valid_session
         person.reload
-        skip("Add assertions for updated state")
+        expect(person.fullname).to be_eql(new_attributes[:fullname])
       end
 
       it "assigns the requested person as @person" do
@@ -154,6 +156,27 @@ RSpec.describe PeopleController, type: :controller do
       delete :destroy, {:id => person.to_param}, valid_session
       expect(response).to redirect_to(people_url)
     end
+  end
+
+  context "CSV" do
+    render_views
+
+    let(:csv) {
+       ([ Person.column_names.join(',') ] <<
+          Person.all.map do |p|
+            p.attributes.values_at(*Person.column_names).join(',')
+          end).join("\n")
+    }
+
+    describe "GET #index - download CVS" do
+      it "assigns all people as @people" do
+        person = Person.create! valid_attributes
+        get :index, { format: :csv }, valid_session
+        expect(assigns(:people)).to eq([person])
+        expect(response.body.strip).to eq(csv)
+      end
+    end
+
   end
 
 end
