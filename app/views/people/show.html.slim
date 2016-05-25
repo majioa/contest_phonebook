@@ -13,6 +13,5 @@ p
   strong Description:
   = @person.description
 
-= link_to 'Edit', edit_person_path(@person)
-'|
-= link_to 'Back', people_path
+= link_to 'Edit', edit_person_path(@person), class: 'btn btn-default'
+= link_to 'Back', people_path, class: 'btn btn-default'

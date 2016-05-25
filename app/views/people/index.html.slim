@@ -1,6 +1,6 @@
 h1 Listing people
 
-table
+table.table.table-striped
   thead
     tr
       th Fullname
@@ -24,6 +24,6 @@ table
 
 br
 
-= link_to 'New Person', new_person_path
-= link_to "Download CSV", people_path(format: "csv")
-= link_to "Import CSV", import_people_path
+= link_to 'New Person', new_person_path, class: 'btn btn-primary'
+= link_to "Download CSV", people_path(format: "csv"), class: 'btn btn-primary'
+= link_to "Import CSV", import_people_path, class: 'btn btn-primary'

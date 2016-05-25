@@ -1,7 +1,9 @@
+h1 Select CSV file to upload
+
 p#notice = notice
 
-= form_tag upload_csv_people_path, multipart: true do
-  = file_field_tag :csv
-  = submit_tag "Import CSV"
+= form_tag upload_csv_people_path, multipart: true, method: :put, class: 'form-horizontal' do
+  = file_field_tag :csv, class: 'form-control', placeholder: 'Select file'
+  = submit_tag "Import CSV", class: 'btn btn-default'
 
-= link_to 'Back', people_path
+= link_to 'Back', people_path, class: 'btn btn-default'

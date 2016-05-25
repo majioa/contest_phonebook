@@ -1,11 +1,18 @@
 doctype html
 html
    head
-      title RorTemplate
+      title Phonebook
       = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': true
       = javascript_include_tag 'application', 'data-turbolinks-track': true
       = csrf_meta_tags
    body
-      p.notice = notice
-      p.alert = alert
-      == yield
+      = nav_bar fixed: :top, brand: "Phonebook", responsive: true do
+         = menu_group do
+            = menu_item "Home", root_path
+            = menu_divider
+            = menu_item "Book", people_path
+      .container
+         p.notice.bg-info = notice
+         p.alert.bg-danger = alert
+         br
+         == yield
