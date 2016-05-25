@@ -65,6 +65,21 @@ class PeopleController < ApplicationController
     end
   end
 
+  # GET /import
+  # GET /import.json
+  def import
+  end
+
+  # PUT /upload_csv
+  # PUT /upload_csv.json
+  def upload_csv
+    Person.import(csv_person_params)
+
+    respond_to do |format|
+      format.html { redirect_to people_url, notice: 'People were successfully inported.' }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_person
@@ -74,5 +89,9 @@ class PeopleController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:fullname, :email, :phone, :description)
+    end
+
+    def csv_person_params
+      params.permit(:csv)
     end
 end

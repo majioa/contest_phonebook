@@ -7,6 +7,14 @@ RSpec.describe PeopleController, type: :routing do
       expect(:get => "/people").to route_to("people#index")
     end
 
+    it "routes to #import" do
+      expect(:get => "/people/import").to route_to("people#import")
+    end
+
+    it "routes to #upload_csv" do
+      expect(:put => "/people/upload_csv").to route_to("people#upload_csv")
+    end
+
     it "routes to #new" do
       expect(:get => "/people/new").to route_to("people#new")
     end

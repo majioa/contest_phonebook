@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :people
+  resources :people do
+    get :import, on: :collection
+    put :upload_csv, on: :collection
+  end
   devise_for :users
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.

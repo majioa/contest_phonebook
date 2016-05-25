@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :routing do
   describe "routing" do
 
     it "default routes to #index" do
-      expect(:get => "/").to route_to("home#index")
+      expect(:get => "/").to route_to("people#index")
     end
 
     it "routes to #index" do

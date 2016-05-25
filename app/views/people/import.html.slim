@@ -1,0 +1,7 @@
+p#notice = notice
+
+= form_tag upload_csv_people_path, multipart: true do
+  = file_field_tag :csv
+  = submit_tag "Import CSV"
+
+= link_to 'Back', people_path

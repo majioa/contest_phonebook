@@ -168,6 +168,20 @@ RSpec.describe PeopleController, type: :controller do
           end).join("\n")
     }
 
+    let(:csv_file) {
+      Rack::Test::UploadedFile.new("spec/fixtures/files/updated.csv", "text/csv")
+    }
+
+    let(:other_valid_attributes) {
+      { fullname: 'Other Name', email: 'qq@q.e', phone: '+7-000-1111111',
+        description: 'other desc'}
+    }
+
+    let(:third_valid_attributes) {
+      { fullname: 'Third Name', email: 'qqq@q.e', phone: '+7-1111111',
+        description: 'third desc'}
+    }
+
     describe "GET #index - download CVS" do
       it "assigns all people as @people" do
         person = Person.create! valid_attributes
@@ -177,6 +191,26 @@ RSpec.describe PeopleController, type: :controller do
       end
     end
 
-  end
+    describe "PUT #import - upload CVS" do
+      it "assigns all people as @people" do
+        person1 = Person.create! valid_attributes
+        person2 = Person.create! other_valid_attributes
+        person3 = Person.create! third_valid_attributes
+        put :upload_csv, { csv: csv_file }
+        expect(response).to redirect_to(people_url)
+        people = Person.all
+        expect(people[0].fullname).to_not eq(person1.fullname)
+        expect(people[1].fullname).to eq(person2.fullname)
+        expect(people[2].fullname).to eq('Name4')
+        expect { person3.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
 
+    describe "GET #import" do
+      it "show import form" do
+        get :import, valid_session
+        expect(response).to render_template("import")
+      end
+    end
+  end
 end
