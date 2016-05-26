@@ -34,7 +34,7 @@ class Person < ActiveRecord::Base
     update_hashes = update_ids.map { |x| csv[ids.index(x)].to_hash }
     update_hashes.each do |x|
        person = Person.find_by_id(x['id'])
-       if x['updated_at'] > person.updated_at
+       if x['updated_at'] >= person.updated_at
           person.update!(x)
        end
     end
