@@ -27,7 +27,7 @@ class Person < ActiveRecord::Base
 
   def self.create_by_id create_ids, ids, csv
     create_hashes = create_ids.map { |x| csv[ids.index(x)].to_hash }
-    create_hashes.each { |x| Person.create!(x) }
+    create_hashes.each { |x| Person.create(x) }
   end
 
   def self.update_by_id update_ids, ids, csv
@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
     update_hashes.each do |x|
        person = Person.find_by_id(x['id'])
        if x['updated_at'] >= person.updated_at
-          person.update!(x)
+          person.update(x)
        end
     end
   end
